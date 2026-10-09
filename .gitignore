@@ -1,0 +1,59 @@
+# Dependencies and package-manager caches
+node_modules/
+.node_modules.lock
+.npm/
+.pnpm-store/
+.yarn/cache/
+
+# Generated application output
+dist/
+build/
+.output/
+.nitro/
+.tanstack/
+.vercel/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# App Builder configuration is public; transient workspace state is not.
+.grok/*
+!.grok/app-env.json
+!.grok/references/
+!.grok/skills/
+.project_id
+
+# Runtime output, temporary inputs, and browser artifacts
+artifacts/
+screenshots/
+tmp/
+temp/
+test-results/
+playwright-report/
+*.log
+*.pid
+*.tmp
+*.bak
+
+# Environment and credentials (do not commit real values)
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+.aws/
+.credentials/
+
+# Operating-system and editor-local files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Agent-local metadata
+.agents/
+.codex/

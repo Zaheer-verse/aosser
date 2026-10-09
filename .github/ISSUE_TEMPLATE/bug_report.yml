@@ -1,0 +1,57 @@
+name: Bug report
+description: Report a reproducible problem with Dosser.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the problem using non-sensitive inputs. Do not upload private documents, credentials, or sensitive logs. Follow SECURITY.md for vulnerability reports.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the compression mode, file type and size, and the buttons you clicked.
+      placeholder: |
+        1. Add a synthetic PNG of approximately ...
+        2. Choose Balanced and start the press.
+        3. Click Download ...
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: e.g. Chrome 130
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and operating system
+      placeholder: e.g. Android phone, Windows laptop, iPad
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: How was the app opened?
+      options:
+        - Standalone browser tab
+        - Embedded preview or in-app browser
+        - Installed web app
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Additional evidence
+      description: Optional screenshots, sanitized console messages, or a synthetic sample. For downloads, say whether the browser started a download and whether the downloaded file opened correctly.

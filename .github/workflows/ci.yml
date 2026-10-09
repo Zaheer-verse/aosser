@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Tests, types, build, and browser downloads
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Verify downloads and archives
+        run: npm run test:downloads
+
+      - name: Check TypeScript
+        run: npm run typecheck
+
+      - name: Build production output
+        run: npm run build
+
+      - name: Install Chromium for browser verification
+        run: node node_modules/playwright/cli.js install --with-deps chromium
+
+      - name: Verify production browser downloads
+        shell: bash
+        run: |
+          npm run preview > preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          preview_ready=false
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:8081/ > /dev/null; then
+              preview_ready=true
+              break
+            fi
+            if ! kill -0 "$preview_pid" 2>/dev/null; then
+              cat preview.log
+              exit 1
+            fi
+            sleep 1
+          done
+          if [ "$preview_ready" != true ]; then
+            cat preview.log
+            exit 1
+          fi
+          npm run test:browser -- http://127.0.0.1:8081/
