@@ -23,3 +23,11 @@ The app still loads its own assets, font resources, and platform scripts over th
 - Dependencies used for parsing and encoding untrusted files.
 
 Use synthetic inputs when investigating a report. Never commit real user files, `.env` files, API tokens, private keys, deployment metadata, or runtime logs. The included platform integration helpers remain disabled for this app; enabling them requires a separate security review and configuration.
+
+## Authentication configuration and historical credential
+
+Authentication is shipped disabled. Enabling it now requires an explicit server-side `GROK_AUTH_CLIENT_SECRET`; a missing or blank secret stops authentication initialization. Supply a credential issued for this deployment through the hosting provider's secret configuration. Never put it in a `VITE_*` value or commit it. Cookie verification errors do not log cookie fragments.
+
+The initial commit contained a provider-owned, shared preview OAuth credential. It has been removed from the current source, but remains accessible in Git history and potentially in copies. Its revocation status is unknown; removing source cannot revoke a provider credential. The provider must revoke or replace the shared credential. Repository visibility changes cannot undo prior disclosure.
+
+The history scan records exactly one exception for that finding's initial-commit fingerprint. It does not allowlist a path or a credential pattern, and the current-file/archive scan uses a separate empty ignore file. Any new finding or reintroduced credential still fails the scan. A passing history scan therefore means no unexcepted findings, not a claim that historical exposure was erased.
