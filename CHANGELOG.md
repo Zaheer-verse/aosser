@@ -4,6 +4,10 @@ Changes are recorded here as they are prepared. Release tags and dates will be a
 
 ## Unreleased
 
+### Changed
+
+- Adopt Aosser across the app identity, download archives, package metadata, documentation, and GitHub repository links.
+
 ### Fixed
 
 - Use a direct browser download for completed individual files.

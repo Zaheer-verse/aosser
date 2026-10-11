@@ -28,7 +28,9 @@ function Home() {
       const { added, rejected } = addFiles(files);
       for (const reason of rejected) toast.error(reason);
       if (added && rejected.length === 0) {
-        toast.success(added === 1 ? "File added to the press." : `${added} files added to the press.`);
+        toast.success(
+          added === 1 ? "File added to the press." : `${added} files added to the press.`,
+        );
       }
     },
     [addFiles],
@@ -72,7 +74,8 @@ function Home() {
             Press files down. Keep what matters.
           </h1>
           <p className="mt-4 max-w-lg text-base leading-normal text-muted">
-            Choose a force, drop anything up to a gigabyte, and take a lighter copy. Nothing leaves this browser.
+            Choose a force, drop anything up to a gigabyte, and take a lighter copy. Nothing leaves
+            this browser.
           </p>
         </section>
 
@@ -111,7 +114,7 @@ function Home() {
 
         {jobs.length === 0 && (
           <footer className="mt-auto pt-12 text-xs text-subtle">
-            Dosser compresses locally. Large videos may take a few minutes.
+            Aosser compresses locally. Large videos may take a few minutes.
           </footer>
         )}
       </div>

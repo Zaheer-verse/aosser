@@ -1,4 +1,4 @@
-# Contributing to Dosser
+# Contributing to Aosser
 
 Thank you for helping make local file compression more reliable and usable.
 

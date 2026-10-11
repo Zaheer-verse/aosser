@@ -1,5 +1,5 @@
 {
-  "name": "dosser",
+  "name": "aosser",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -109,12 +109,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zaheer-verse/dosser.git"
+    "url": "git+https://github.com/Zaheer-verse/aosser.git"
   },
   "bugs": {
-    "url": "https://github.com/Zaheer-verse/dosser/issues"
+    "url": "https://github.com/Zaheer-verse/aosser/issues"
   },
-  "homepage": "https://github.com/Zaheer-verse/dosser#readme",
+  "homepage": "https://github.com/Zaheer-verse/aosser#readme",
   "keywords": [
     "compression",
     "privacy",

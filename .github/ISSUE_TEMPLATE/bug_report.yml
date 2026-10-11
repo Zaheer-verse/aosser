@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem with Dosser.
+description: Report a reproducible problem with Aosser.
 title: "[Bug]: "
 labels: ["bug"]
 body:

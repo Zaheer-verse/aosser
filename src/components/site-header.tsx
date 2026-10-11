@@ -9,7 +9,7 @@ export function SiteHeader() {
           <PressMark className="size-6" />
         </span>
         <div>
-          <p className="font-display text-xl font-medium tracking-tight text-fg">Dosser</p>
+          <p className="font-display text-xl font-medium tracking-tight text-fg">Aosser</p>
           <p className="text-xs text-muted">The press for heavy files</p>
         </div>
       </div>

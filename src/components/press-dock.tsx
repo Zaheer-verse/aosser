@@ -55,7 +55,7 @@ function ArchiveDownload({ jobs }: { jobs: Job[] }) {
       {url ? (
         <a
           href={url}
-          download="dosser-pressed.zip"
+          download="aosser-pressed.zip"
           className={buttonVariants({ variant: "secondary", size: "md" })}
           onClick={() =>
             toast.info("Download requested. Check the Downloads folder in your browser.")

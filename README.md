@@ -1,13 +1,13 @@
-# Dosser
+# Aosser
 
-[![CI](https://github.com/Zaheer-verse/dosser/actions/workflows/ci.yml/badge.svg)](https://github.com/Zaheer-verse/dosser/actions/workflows/ci.yml)
+[![CI](https://github.com/Zaheer-verse/aosser/actions/workflows/ci.yml/badge.svg)](https://github.com/Zaheer-verse/aosser/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Press files down. Keep what matters.**
 
-Dosser is a browser file compressor for images, videos, PDFs, and Word documents. Choose Balanced or Strong compression, add a stack of files, and download lighter copies individually or together as a ZIP. File contents are processed on your device; the compression flow does not upload them to a server.
+Aosser is a browser file compressor for images, videos, PDFs, and Word documents. Choose Balanced or Strong compression, add a stack of files, and download lighter copies individually or together as a ZIP. File contents are processed on your device; the compression flow does not upload them to a server.
 
-![Dosser file compression interface](docs/preview.png)
+![Aosser file compression interface](docs/preview.png)
 
 ## Features
 
@@ -120,4 +120,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, [SECURITY.m
 
 ## License
 
-Dosser is licensed under the [MIT License](LICENSE). Dependencies remain subject to their respective licenses.
+Aosser is licensed under the [MIT License](LICENSE). Dependencies remain subject to their respective licenses.

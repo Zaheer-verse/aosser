@@ -96,7 +96,7 @@ try {
     await page.waitForTimeout(5500);
     await page.screenshot({ path: join(output, `${mode}-ready.png`), fullPage: true });
     const archiveDownload = await save(zipLink, "archive");
-    assert.equal(archiveDownload.download.suggestedFilename(), "dosser-pressed.zip");
+    assert.equal(archiveDownload.download.suggestedFilename(), "aosser-pressed.zip");
     const zip = await JSZip.loadAsync(archiveDownload.bytes);
     const entries = Object.values(zip.files).filter((entry) => !entry.dir);
     assert.equal(entries.length, 2);

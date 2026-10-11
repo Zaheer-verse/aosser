@@ -140,21 +140,21 @@ test("looksLikePreviewProcess recognizes node-launched Vite entry files", () => 
 });
 
 test("Windows preview identification requires this workspace and the preview command", () => {
-  const root = "C:\\Projects\\Dosser";
+  const root = "C:\\Projects\\Aosser";
   assert.equal(
     isWindowsWorkspacePreview(
-      'node "C:\\Projects\\Dosser\\node_modules\\vite\\bin\\vite.js" preview',
+      'node "C:\\Projects\\Aosser\\node_modules\\vite\\bin\\vite.js" preview',
       root,
     ),
     true,
   );
   assert.equal(
-    isWindowsWorkspacePreview('node npm-cli.js --prefix "c:\\projects\\dosser" run preview', root),
+    isWindowsWorkspacePreview('node npm-cli.js --prefix "c:\\projects\\aosser" run preview', root),
     true,
   );
   assert.equal(
     isWindowsWorkspacePreview(
-      'node "C:\\Projects\\Dosser-copy\\node_modules\\vite\\bin\\vite.js" preview',
+      'node "C:\\Projects\\Aosser-copy\\node_modules\\vite\\bin\\vite.js" preview',
       root,
     ),
     false,
@@ -164,12 +164,12 @@ test("Windows preview identification requires this workspace and the preview com
     false,
   );
   assert.equal(
-    isWindowsWorkspacePreview('node "C:\\Projects\\Dosser\\scripts\\preview.mjs" stop', root),
+    isWindowsWorkspacePreview('node "C:\\Projects\\Aosser\\scripts\\preview.mjs" stop', root),
     false,
   );
   assert.equal(
     isWindowsWorkspacePreview(
-      'node npm-cli.js --prefix "C:\\Projects\\Dosser" run preview:stop',
+      'node npm-cli.js --prefix "C:\\Projects\\Aosser" run preview:stop',
       root,
     ),
     false,
@@ -177,10 +177,10 @@ test("Windows preview identification requires this workspace and the preview com
 });
 
 test("Windows preview ownership refuses unrelated port listeners and stale pidfiles", () => {
-  const root = "C:\\Dosser";
+  const root = "C:\\Aosser";
   const processes = [
-    { pid: 51, commandLine: 'node "C:\\Dosser\\node_modules\\vite\\bin\\vite.js" preview' },
-    { pid: 50, commandLine: 'node npm-cli.js --prefix "C:\\Dosser" run preview' },
+    { pid: 51, commandLine: 'node "C:\\Aosser\\node_modules\\vite\\bin\\vite.js" preview' },
+    { pid: 50, commandLine: 'node npm-cli.js --prefix "C:\\Aosser" run preview' },
     { pid: 77, commandLine: 'node "C:\\Other\\node_modules\\vite\\bin\\vite.js" preview' },
   ];
   assert.deepEqual(windowsPreviewOwners({ portPids: [51], pidFilePid: 50, processes, root }), {
@@ -222,7 +222,7 @@ test("Windows npm launch uses Node and a known npm CLI without a shell", () => {
 
 test("Windows relative Vite commands require an attributable preview ancestor", () => {
   const processes = [
-    { pid: 50, parentPid: 1, commandLine: 'node npm-cli.js --prefix "C:\\Dosser" run preview' },
+    { pid: 50, parentPid: 1, commandLine: 'node npm-cli.js --prefix "C:\\Aosser" run preview' },
     {
       pid: 51,
       parentPid: 50,
@@ -236,11 +236,11 @@ test("Windows relative Vite commands require an attributable preview ancestor", 
     { pid: 71, parentPid: 70, commandLine: "cmd.exe" },
   ];
   assert.deepEqual(
-    windowsPreviewOwners({ portPids: [52], pidFilePid: 50, processes, root: "C:\\Dosser" }),
+    windowsPreviewOwners({ portPids: [52], pidFilePid: 50, processes, root: "C:\\Aosser" }),
     { owners: [52, 50], unrelated: [] },
   );
   assert.deepEqual(
-    windowsPreviewOwners({ portPids: [61, 70], pidFilePid: null, processes, root: "C:\\Dosser" }),
+    windowsPreviewOwners({ portPids: [61, 70], pidFilePid: null, processes, root: "C:\\Aosser" }),
     { owners: [], unrelated: [61, 70] },
   );
 });
@@ -250,16 +250,16 @@ test("Windows npm launch finds npm beside Node and rejects a missing CLI", () =>
   assert.deepEqual(
     windowsNpmCommand({
       execPath: "C:\\Node\\node.exe",
-      root: "C:\\Dosser",
+      root: "C:\\Aosser",
       fileExists: (file) => file === cli,
     }).args,
-    [cli, "--prefix", "C:\\Dosser", "run", "preview"],
+    [cli, "--prefix", "C:\\Aosser", "run", "preview"],
   );
   assert.throws(
     () =>
       windowsNpmCommand({
         execPath: "C:\\Node\\node.exe",
-        root: "C:\\Dosser",
+        root: "C:\\Aosser",
         fileExists: () => false,
       }),
     /npm-cli\.js/,

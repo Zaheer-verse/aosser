@@ -27,6 +27,6 @@ export function stemAndExt(filename: string): { stem: string; ext: string } {
 
 export function pressedName(original: string, nextExt: string): string {
   const { stem } = stemAndExt(original);
-  const clean = stem.replace(/[-_.]?(pressed|dosser|compressed|min)$/i, "");
+  const clean = stem.replace(/[-_.]?(pressed|aosser|compressed|min)$/i, "");
   return `${clean}-pressed.${nextExt}`;
 }
