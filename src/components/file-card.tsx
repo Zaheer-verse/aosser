@@ -23,10 +23,10 @@ export function FileCard({ job, onRemove }: { job: Job; onRemove: (id: string) =
   const canDownload = job.status === "done" && job.resultUrl && job.resultName;
 
   return (
-    <article className="rounded-xl p-1 shadow-[var(--shadow-border)]">
-      <div className="flex flex-col gap-4 rounded-lg bg-bg-elevated p-4">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="relative size-14 shrink-0 overflow-hidden rounded-md bg-bg-well shadow-[var(--shadow-border)]">
+    <article className="rounded-md border border-border bg-bg-elevated text-fg">
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex min-w-0 items-start gap-3">
+          <div className="relative size-11 shrink-0 overflow-hidden rounded-sm bg-bg-well text-muted sm:size-14">
             {job.previewUrl ? (
               <img
                 src={job.previewUrl}
@@ -40,8 +40,8 @@ export function FileCard({ job, onRemove }: { job: Job; onRemove: (id: string) =
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-fg">{job.file.name}</p>
-            <p className="mt-1 text-xs text-muted">
+            <p className="break-all text-sm font-semibold leading-snug text-fg">{job.file.name}</p>
+            <p className="mt-1 flex flex-wrap items-center gap-y-1 text-xs text-muted">
               {kindLabel(job.kind)}
               <span className="mx-1.5 text-subtle">/</span>
               <span className="tabular-nums">{formatBytes(job.originalSize)}</span>
@@ -52,8 +52,10 @@ export function FileCard({ job, onRemove }: { job: Job; onRemove: (id: string) =
                 </>
               )}
             </p>
+            <div className="mt-2">
+              <StatusSlot job={job} saved={saved} />
+            </div>
           </div>
-          <StatusSlot job={job} saved={saved} />
           <Button
             variant="ghost"
             size="icon"
@@ -74,7 +76,7 @@ export function FileCard({ job, onRemove }: { job: Job; onRemove: (id: string) =
             href={job.resultUrl}
             download={job.resultName}
             className={cn(
-              buttonVariants({ variant: "primary", size: "md" }),
+              buttonVariants({ variant: "secondary", size: "md" }),
               "w-full min-w-0 max-w-full",
             )}
             onClick={() =>
@@ -113,12 +115,30 @@ function CompareSlider({ before, after }: { before: string; after: string }) {
     const box = event.currentTarget.getBoundingClientRect();
     if (!box.width) return;
     const next = ((event.clientX - box.left) / box.width) * 100;
-    setPos(Math.min(94, Math.max(6, next)));
+    setPos(Math.min(100, Math.max(0, next)));
   };
 
   const onKey = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowLeft") setPos((value) => Math.max(6, value - 4));
-    if (event.key === "ArrowRight") setPos((value) => Math.min(94, value + 4));
+    switch (event.key) {
+      case "ArrowLeft":
+      case "ArrowDown":
+        event.preventDefault();
+        setPos((value) => Math.max(0, value - 4));
+        break;
+      case "ArrowRight":
+      case "ArrowUp":
+        event.preventDefault();
+        setPos((value) => Math.min(100, value + 4));
+        break;
+      case "Home":
+        event.preventDefault();
+        setPos(0);
+        break;
+      case "End":
+        event.preventDefault();
+        setPos(100);
+        break;
+    }
   };
 
   return (
@@ -129,6 +149,7 @@ function CompareSlider({ before, after }: { before: string; after: string }) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(pos)}
+        aria-valuetext={`${Math.round(pos)}% original visible`}
         tabIndex={0}
         onKeyDown={onKey}
         onPointerDown={(event) => {
@@ -151,7 +172,7 @@ function CompareSlider({ before, after }: { before: string; after: string }) {
           alt="Pressed"
           draggable={false}
           className="absolute inset-0 size-full object-cover"
-          style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+          style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
         />
         <div
           className="pointer-events-none absolute inset-y-0 w-px bg-primary"
@@ -192,9 +213,7 @@ function StatusSlot({ job, saved }: { job: Job; saved: number }) {
       return <p className="shrink-0 text-xs font-medium text-muted">Already compact</p>;
     }
     return (
-      <p className="shrink-0 font-display text-lg font-medium tabular-nums tracking-tight text-sage">
-        −{formatPercent(saved)}
-      </p>
+      <p className="text-xs font-semibold tabular-nums text-sage">{formatPercent(saved)} smaller</p>
     );
   }
   if (job.status === "error") {

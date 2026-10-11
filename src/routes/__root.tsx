@@ -16,7 +16,7 @@ export const Route = createRootRoute({
         content:
           "Press images, video, PDFs, and Word files down to size. Up to 1 GB, entirely on your device.",
       },
-      { name: "theme-color", content: "#10110f" },
+      { name: "theme-color", content: "#f5f2eb" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -28,7 +28,7 @@ export const Route = createRootRoute({
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap",
       },
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },

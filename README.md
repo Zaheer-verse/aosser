@@ -3,7 +3,7 @@
 [![CI](https://github.com/Zaheer-verse/aosser/actions/workflows/ci.yml/badge.svg)](https://github.com/Zaheer-verse/aosser/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Press files down. Keep what matters.**
+**Compress files. Keep control.**
 
 Aosser is a browser file compressor for images, videos, PDFs, and Word documents. Choose Balanced or Strong compression, add a stack of files, and download lighter copies individually or together as a ZIP. File contents are processed on your device; the compression flow does not upload them to a server.
 
@@ -16,13 +16,13 @@ Aosser is a browser file compressor for images, videos, PDFs, and Word documents
 - Local image resizing and encoding, video transcoding, PDF rendering, and DOCX optimization.
 - Single-file downloads and a prepared ZIP for the completed stack.
 - Retain the original file when a compressed candidate is larger.
-- Responsive interface for desktop and mobile browsers.
+- A responsive workspace with a light paper palette, native keyboard-accessible presets, clear file status, and before-and-after image previews.
 - No account, API key, or database required for the app's compression features.
 
 ## Using the app
 
-1. Select **Balanced** for higher fidelity or **Strong** for smaller output.
-2. Add supported files, then start the press.
+1. Add supported files to the workspace.
+2. Select **Balanced** for higher fidelity or **Strong** for smaller output, then start the press.
 3. Download a completed file from its card. For several files, prepare the ZIP first, then click its download button once it is ready.
 
 Preparing an archive is asynchronous. A separate download click preserves the browser's user activation, which embedded and mobile browsers can require. A single-file download uses the browser's normal download handling. Its destination depends on the device and browser settings; the app cannot confirm where the operating system saves it.
@@ -54,7 +54,7 @@ npm ci
 npm run dev
 ```
 
-The development script starts the application on port 8080. Always use the npm scripts: they load the committed, non-secret `.grok/app-env.json` configuration through `scripts/with-app-env.mjs`. Authentication and database deployment are disabled for this app.
+The development script starts the application on port 8080. Always use the npm scripts: they load the committed, non-secret `.grok/app-env.json` configuration through `scripts/with-app-env.mjs`. Authentication and database deployment are disabled for this app. Aosser's standalone configuration sets `VITE_GROK_EXTENSIONS=0`, using the platform's supported switch to omit its attribution and remix badge. Hosting environment variables take precedence over the committed configuration; use the same setting on a separately managed deployment.
 
 ### Commands
 
@@ -94,6 +94,8 @@ The UI uses React 19, TypeScript, TanStack Start/Router, Tailwind CSS, Zustand, 
 
 GitHub Actions runs dependency installation, the existing tests, download regression tests, TypeScript checks, the production build, and Chromium download checks on pushes and pull requests. Dependabot checks npm dependencies and GitHub Actions weekly, with at most five open update pull requests per ecosystem.
 
+Security automation includes a redacted Gitleaks scan, a locked-dependency vulnerability audit, and CodeQL analysis. See [the security review](docs/security-review.md) for the checked scope, results, and remaining limitations. A passing scan is evidence about the checks performed, not a guarantee that no vulnerabilities exist.
+
 To run the browser regression locally, install Chromium once, start a production preview after building, then target that running preview:
 
 ```sh
@@ -108,7 +110,7 @@ Run the check from a separate terminal while the preview is serving:
 npm run test:browser -- http://127.0.0.1:8081/
 ```
 
-The browser check accepts loopback URLs only and writes its artifacts within the repository. For manual verification, process a non-sensitive file, download it, inspect its bytes, then prepare and download a multi-file ZIP. Check duplicate filenames and repeat at a mobile viewport and in the intended embedded host.
+The browser check accepts loopback URLs only and writes its artifacts within the repository. It checks desktop, mobile emulation, and an embedded preview; validates downloaded file and ZIP bytes; exercises keyboard presets; and checks that compression does not make HTTP upload requests or inject the disabled platform badge. For manual verification, process a non-sensitive file, download it, inspect its bytes, then prepare and download a multi-file ZIP. Check duplicate filenames and repeat on the intended physical device and embedded host.
 
 ## Deployment
 

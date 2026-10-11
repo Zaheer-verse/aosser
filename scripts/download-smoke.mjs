@@ -22,6 +22,12 @@ try {
     });
     const page = await context.newPage();
     const errors = [];
+    const uploadRequests = [];
+    context.on("request", (request) => {
+      if (/^https?:/.test(request.url()) && ["POST", "PUT", "PATCH"].includes(request.method())) {
+        uploadRequests.push({ method: request.method(), url: request.url() });
+      }
+    });
     page.on("pageerror", (err) => errors.push(err.message));
     page.on("console", (msg) => {
       if (msg.type() === "error") errors.push(msg.text());
@@ -34,11 +40,27 @@ try {
       );
       await page
         .frameLocator("iframe")
-        .getByRole("heading", { name: "Press files down. Keep what matters." })
+        .getByRole("heading", { name: "Compress files. Keep control." })
         .waitFor();
       surface = page.frames().find((frame) => frame.parentFrame());
       assert.ok(surface);
     }
+    assert.equal(
+      await surface.locator('script[src*="grok-app-builder/extensions.js"]').count(),
+      0,
+      "standalone Aosser configuration must not inject the platform badge",
+    );
+    const balanced = surface.getByRole("radio", { name: /^Balanced/ });
+    const strong = surface.getByRole("radio", { name: /^Strong/ });
+    assert.equal(await balanced.isChecked(), true);
+    await balanced.press("ArrowRight");
+    assert.equal(
+      await strong.isChecked(),
+      true,
+      "compression presets must support keyboard navigation",
+    );
+    await strong.press("ArrowLeft");
+    assert.equal(await balanced.isChecked(), true);
     const fixture = await surface.evaluate(() => {
       const canvas = document.createElement("canvas");
       canvas.width = 640;
@@ -63,6 +85,13 @@ try {
     await surface.getByRole("button", { name: "Press 1 file", exact: true }).click();
     const card = surface.locator("article a[download]").first();
     await card.waitFor({ state: "visible" });
+    const comparison = surface.getByRole("slider", { name: "Compare original and pressed" });
+    await comparison.press("Home");
+    assert.equal(await comparison.getAttribute("aria-valuenow"), "0");
+    await comparison.press("End");
+    assert.equal(await comparison.getAttribute("aria-valuenow"), "100");
+    await comparison.press("ArrowLeft");
+    assert.equal(await comparison.getAttribute("aria-valuenow"), "96");
     const expected = await surface.evaluate(async () => {
       const link = document.querySelector("article a[download]");
       return {
@@ -120,6 +149,7 @@ try {
     // Failed fetch above is intentional and may log a network error.
     const unexpected = errors.filter((error) => !error.includes("ERR_FILE_NOT_FOUND"));
     assert.deepEqual(unexpected, []);
+    assert.deepEqual(uploadRequests, [], "local compression must not send upload requests");
     assert.equal(
       await surface.evaluate(
         () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
@@ -134,6 +164,9 @@ try {
       downloads: 3,
       staleArchiveReleased: true,
       consoleErrors: unexpected,
+      uploadRequests: uploadRequests.length,
+      keyboardPresets: true,
+      platformBadge: false,
     });
     await context.close();
   }

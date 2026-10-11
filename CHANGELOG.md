@@ -6,6 +6,8 @@ Changes are recorded here as they are prepared. Release tags and dates will be a
 
 ### Changed
 
+- Redesign Aosser as a light, responsive workspace with a dedicated monogram, clearer file controls, and keyboard-accessible compression presets.
+- Disable the platform attribution and remix badge through the supported standalone project setting.
 - Adopt Aosser across the app identity, download archives, package metadata, documentation, and GitHub repository links.
 
 ### Fixed
@@ -17,6 +19,8 @@ Changes are recorded here as they are prepared. Release tags and dates will be a
 
 ### Added
 
+- Automated dependency auditing and CodeQL analysis alongside the existing secret scan.
+- Browser checks for keyboard preset selection, local-only processing requests, and the standalone branding setting.
 - Regression coverage for file downloads and ZIP creation.
 - Project documentation, contribution and security guidance, and GitHub issue and pull request templates.
 - Continuous integration for tests, download checks, TypeScript, and the production build.

@@ -51,7 +51,7 @@ function ArchiveDownload({ jobs }: { jobs: Job[] }) {
   };
 
   return (
-    <div className="flex min-w-0 flex-col gap-1">
+    <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-none">
       {url ? (
         <a
           href={url}
@@ -73,7 +73,7 @@ function ArchiveDownload({ jobs }: { jobs: Job[] }) {
           {preparing ? "Preparing ZIP…" : error ? "Retry ZIP" : "Prepare ZIP"}
         </Button>
       )}
-      <p className="max-w-xs text-xs text-muted" role="status">
+      <p className="max-w-xs text-xs leading-relaxed text-muted" role="status">
         {url
           ? "ZIP ready. Click Download all to save it."
           : preparing
@@ -106,10 +106,10 @@ export function PressDock({
   if (jobs.length === 0) return null;
 
   return (
-    <div className="sticky bottom-4 z-10 rounded-2xl p-1.5 shadow-[var(--shadow-border)] backdrop-blur-sm">
-      <div className="flex flex-col gap-3 rounded-xl bg-bg-elevated px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="border-t border-border pt-5">
+      <div className="flex flex-col gap-4">
         <div className="min-w-0">
-          <p className="text-sm font-medium text-fg">
+          <p className="text-sm font-semibold text-fg" role="status">
             {busy ? "Pressing files" : hasPressed ? "Pressed and ready" : "Ready to press"}
           </p>
           <p className="mt-0.5 text-xs text-muted">
@@ -126,7 +126,7 @@ export function PressDock({
             )}
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-start gap-3 [&>a]:flex-1 [&>button]:flex-1 sm:[&>a]:flex-none sm:[&>button]:flex-none">
           {single && (
             <a
               href={single.resultUrl}

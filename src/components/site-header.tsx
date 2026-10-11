@@ -1,22 +1,39 @@
-import { ShieldCheck } from "lucide-react";
-import { PressMark } from "./press-mark";
+import { ArrowUpRight } from "lucide-react";
 
 export function SiteHeader() {
   return (
-    <header className="flex items-center justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <span className="flex size-10 items-center justify-center rounded-lg bg-bg-elevated shadow-[var(--shadow-border)]">
-          <PressMark className="size-6" />
+    <header className="flex min-h-24 items-center justify-between gap-6 border-b border-border">
+      <a href="#" className="flex min-h-11 items-center gap-3 rounded-sm" aria-label="Aosser home">
+        <img src="/favicon.svg" width={36} height={36} alt="" />
+        <span className="text-2xl font-extrabold tracking-tight">
+          Aosser<span className="text-sage">.</span>
         </span>
-        <div>
-          <p className="font-display text-xl font-medium tracking-tight text-fg">Aosser</p>
-          <p className="text-xs text-muted">The press for heavy files</p>
-        </div>
-      </div>
-      <p className="hidden items-center gap-1.5 text-xs text-muted sm:flex">
-        <ShieldCheck className="size-3.5" strokeWidth={1.75} />
-        Stays on this device
-      </p>
+      </a>
+      <nav
+        aria-label="Main navigation"
+        className="flex items-center gap-5 text-sm font-semibold sm:gap-8"
+      >
+        <a
+          href="#workspace"
+          className="hidden min-h-11 items-center text-muted transition-colors hover:text-fg sm:inline-flex"
+        >
+          Workspace
+        </a>
+        <a
+          href="#formats"
+          className="hidden min-h-11 items-center text-muted transition-colors hover:text-fg sm:inline-flex"
+        >
+          Supported files
+        </a>
+        <a
+          href="https://github.com/Zaheer-verse/aosser"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-sm text-fg"
+        >
+          GitHub <ArrowUpRight className="size-4" aria-hidden="true" />
+        </a>
+      </nav>
     </header>
   );
 }

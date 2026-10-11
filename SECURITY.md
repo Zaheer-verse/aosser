@@ -12,7 +12,7 @@ Security fixes are considered for the current default branch. There is no publis
 
 The app processes files in the browser. Its compression flow does not upload file contents, requires no account, and does not persist a server-side file history. File buffers and results remain in memory until the page is closed or the queue is cleared. Downloaded files are then managed by the browser and operating system.
 
-The app still loads its own assets, font resources, and platform scripts over the network. Local file processing does not mean that the webpage makes no network requests. Deployment-host behavior and browser extensions are outside this repository's control.
+The app still loads its own assets and font resources over the network. The optional platform extension script is disabled in the shipped app configuration. Local file processing does not mean that the webpage makes no network requests. Deployment-host behavior and browser extensions are outside this repository's control.
 
 ## Areas that warrant scrutiny
 
@@ -23,6 +23,15 @@ The app still loads its own assets, font resources, and platform scripts over th
 - Dependencies used for parsing and encoding untrusted files.
 
 Use synthetic inputs when investigating a report. Never commit real user files, `.env` files, API tokens, private keys, deployment metadata, or runtime logs. The included platform integration helpers remain disabled for this app; enabling them requires a separate security review and configuration.
+
+## Automated checks
+
+- **Dependency audit:** checks all locked npm dependencies, including development dependencies, on pushes, pull requests, and a weekly schedule. Known vulnerabilities at low severity or above fail the job. Dependency installation in this audit disables lifecycle scripts.
+- **CodeQL:** analyzes JavaScript and TypeScript using the security-extended query suite on the default branch, pull requests, and a weekly schedule. Findings are published in the repository's Security tab.
+- **Secret scan:** checks Git history and the current checkout with checksum-verified Gitleaks, with redacted output and the narrowly scoped historical exception described below.
+- **Dependabot:** proposes weekly npm and GitHub Actions updates. Action references are pinned to immutable commits, and workflow permissions are restricted to their required scope.
+
+See [the security review](docs/security-review.md) for the checked scope and remaining limitations. Automated checks identify known patterns and advisories; they do not certify that a release is free of vulnerabilities. A successful CodeQL upload is not the same as an empty alert list.
 
 ## Authentication configuration and historical credential
 
