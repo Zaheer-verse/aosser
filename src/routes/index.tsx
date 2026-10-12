@@ -220,14 +220,7 @@ function Home() {
           <p>
             <span className="font-bold text-fg">Aosser</span> · Less to carry. More to share.
           </p>
-          <a
-            href="https://github.com/Zaheer-verse/aosser/blob/main/LICENSE"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 hover:text-fg"
-          >
-            Open source · MIT License
-          </a>
+          <span>Open source · MIT License</span>
         </footer>
       </div>
       <Toaster

@@ -50,6 +50,11 @@ try {
       0,
       "standalone Aosser configuration must not inject the platform badge",
     );
+    assert.equal(
+      await surface.locator('a[href*="github.com"]').count(),
+      0,
+      "product UI must not expose repository links",
+    );
     const balanced = surface.getByRole("radio", { name: /^Balanced/ });
     const strong = surface.getByRole("radio", { name: /^Strong/ });
     assert.equal(await balanced.isChecked(), true);

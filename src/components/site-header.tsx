@@ -1,5 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
-
 export function SiteHeader() {
   return (
     <header className="flex min-h-24 items-center justify-between gap-6 border-b border-border">
@@ -24,14 +22,6 @@ export function SiteHeader() {
           className="hidden min-h-11 items-center text-muted transition-colors hover:text-fg sm:inline-flex"
         >
           Supported files
-        </a>
-        <a
-          href="https://github.com/Zaheer-verse/aosser"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-sm text-fg"
-        >
-          GitHub <ArrowUpRight className="size-4" aria-hidden="true" />
         </a>
       </nav>
     </header>
