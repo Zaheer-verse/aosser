@@ -216,11 +216,10 @@ function Home() {
             </details>
           </section>
         </main>
-        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-6 text-xs text-muted">
+        <footer className="border-t border-border py-6 text-xs text-muted">
           <p>
             <span className="font-bold text-fg">Aosser</span> · Less to carry. More to share.
           </p>
-          <span>Open source · MIT License</span>
         </footer>
       </div>
       <Toaster

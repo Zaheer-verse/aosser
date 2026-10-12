@@ -55,6 +55,11 @@ try {
       0,
       "product UI must not expose repository links",
     );
+    assert.doesNotMatch(
+      await surface.locator("body").innerText(),
+      /github|open source|repository/i,
+      "product UI must not expose repository information",
+    );
     const balanced = surface.getByRole("radio", { name: /^Balanced/ });
     const strong = surface.getByRole("radio", { name: /^Strong/ });
     assert.equal(await balanced.isChecked(), true);
